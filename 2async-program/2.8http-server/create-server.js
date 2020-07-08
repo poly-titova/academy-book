@@ -37,13 +37,41 @@ const onClientConnect = (request, response) => {
   const HTTP_SUCCESS_CODE = 200;
   const HTTP_NOT_FOUND_CODE = 404;
 
+  // для разбирания запросов клиента и оттования соответствующих ресурсов
+  switch (request.url) {
+    case `/style.css`:
+      response.writeHead(HTTP_SUCCESS_CODE, {
+        'Content-Type': `text/css; charset=UTF-8`,
+      });
+
+      response.end(styles);
+      break;
+
+    case `/`:
+      const userAgent = request.headers[`user-agent`];
+      const responseText = getResponseText(userAgent);
+
+      response.writeHead(HTTP_SUCCESS_CODE, {
+        'Content-Type': `text/html; charset=UTF-8`,
+      });
+
+      response.end(responseText);
+      break;
+
+    default:
+      response.writeHead(HTTP_NOT_FOUND_CODE, {
+        'Content-Type': `text/plain; charset=UTF-8`,
+      });
+      response.end(`Упс, ничего не найдено :(`);
+  }
+
   // формирование и отправление заголовока ответа на запрос
   response.writeHead(HTTP_SUCCESS_CODE, {
     // чтобы клиент мог определить тип содержимого
     'Content-Type': `text/html; charset=UTF-8`,
   });
 
-  response.end(responseText);
+  response.end(getResponseText);
 };
 
 // создали переменную для определения порта, на котором будут приниматься подключения
