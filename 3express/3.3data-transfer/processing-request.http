@@ -1,0 +1,1 @@
+GET http://localhost:3000/?company=HTMLAcademy&site=https://htmlacademy.ru HTTP/1.1
