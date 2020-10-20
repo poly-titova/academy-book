@@ -13,3 +13,9 @@ app.use((req, res, next) => {
     res.send(`Hello`);
   }
 });
+
+app.use((req, res, next) => {
+  if (req.path === `/keks`) {
+    res.send(`Hello. I'am Keks`);
+  }
+});
