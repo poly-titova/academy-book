@@ -12,10 +12,18 @@ app.use((req, res, next) => {
   if (req.path === `/`) {
     res.send(`Hello`);
   }
+
+  // Передаём эстафетную палочку следующему
+  // middleware
+  next();
 });
 
 app.use((req, res, next) => {
   if (req.path === `/keks`) {
     res.send(`Hello. I'am Keks`);
   }
+
+  // Передаём эстафетную палочку следующему
+  // middleware
+  next();
 });
