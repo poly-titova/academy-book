@@ -25,3 +25,10 @@ test(`Should retrieve book with title 'The Outsider'`, async () => {
 
   expect(bookResponse.body.title).toBe(`The Outsider`);
 });
+
+test(`Should 400 because title property doesn't exist`, async () => {
+  const res = await request(server)
+    .post(`/api/books`)
+    .send({name: `The Outsider`});
+  expect(res.statusCode).toBe(400);
+});
