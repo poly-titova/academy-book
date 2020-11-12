@@ -13,3 +13,15 @@ test(`Should had properties id and title`, async () => {
   expect(res.body).toHaveProperty(`id`);
   expect(res.body).toHaveProperty(`title`);
 });
+
+test(`Should retrieve book with title 'The Outsider'`, async () => {
+  const res = await request(server)
+    .post(`/api/books`)
+    .send({title: `The Outsider`});
+
+  const id = parseInt(res.body.id, 10);
+  const bookResponse = await request(server)
+    .get(`/api/books/${id}`);
+
+  expect(bookResponse.body.title).toBe(`The Outsider`);
+});
