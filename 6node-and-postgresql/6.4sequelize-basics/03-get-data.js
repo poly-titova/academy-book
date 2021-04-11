@@ -19,4 +19,13 @@ const Sequelize = require(`sequelize`);
   const entry = await Reader.findByPk(2, {raw: true});
   console.log(entry);
 
+  // Удаляем запись с `id` равным 2
+  console.info(`*** Удаление записи с идентификатором 2:`)
+  const deletedEntry = await Reader.destroy({
+      where: {
+          id: 2
+      }
+  });
+  console.log(deletedEntry)
+
 })();
