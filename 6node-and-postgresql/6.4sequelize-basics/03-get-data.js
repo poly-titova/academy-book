@@ -14,4 +14,9 @@ const Sequelize = require(`sequelize`);
   const allEntries = await Reader.findAll({raw: true});
   console.log(allEntries);
 
+  // Получаем запись с `id` равным 2
+  console.info(`*** Выборка записи с идентификатором 2:`);
+  const entry = await Reader.findByPk(2, {raw: true});
+  console.log(entry);
+
 })();
