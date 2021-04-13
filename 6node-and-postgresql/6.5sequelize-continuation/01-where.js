@@ -37,4 +37,16 @@ const Sequelize = require(`sequelize`);
     raw: true,
  });
  console.log(entries2);
+
+ // Jon и Ivan, оператор IN
+ console.info(`*** Jon и Ivan`);
+ const entries3 = await Reader.findAll({
+     where: {
+         firstname: {
+             [Operator.in]: [`Ivan`, `Jon`]
+         }
+     },
+     raw: true,
+ });
+ console.log(entries3);
 })();
