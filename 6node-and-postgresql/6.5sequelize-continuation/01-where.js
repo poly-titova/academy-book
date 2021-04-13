@@ -21,4 +21,20 @@ const Sequelize = require(`sequelize`);
     });
 
  console.log(entries); // 2 записи
+
+ // Читатели Ivan и Jon, которые родились
+ // после 80-го года
+ console.info(`*** Jon и Ivan`);
+ const entries2 = await Reader.findAll({
+     where: {
+        [Operator.or]: [{firstname: `Ivan`}, {firstname: `Jon`}],
+        [Operator.and]: {
+            birthDate: {
+                [Operator.gt]: `1980-01-01`
+            }
+        }
+     },
+    raw: true,
+ });
+ console.log(entries2);
 })();
