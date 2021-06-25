@@ -6,7 +6,6 @@ class ContactsImporter
     private $columns;
     private $fp;
     private $result = [];
-    private $error = null;
 
     /**
      * ContactsImporter constructor.
@@ -22,29 +21,26 @@ class ContactsImporter
     public function import()
     {
         if (!$this->validateColumns($this->columns)) {
-            $this->error = "Заданы неверные заголовки столбцов";
+            throw new FileFormatException("Заданы неверные заголовки столбцов");
         }
 
-        if (file_exists($this->filename)) {
-            $this->fp = fopen($this->filename, 'r');
+        if (!file_exists($this->filename)) {
+            throw new SourceFileException("Файл не существует");
+        }
 
-            if ($this->fp) {
-                $header_data = $this->getHeaderData();
+        $this->fp = fopen($this->filename, 'r');
 
-                if ($header_data == $this->columns) {
-                    while ($line = $this->getNextLine()) {
-                        $this->result[] = $line;
-                    }
-                } else {
-                    $this->error = "Исходный файл не содержит необходимых столбцов";
-                }
+        if (!$this->fp) {
+            throw new SourceFileException("Не удалось открыть файл на чтение");
+        }
 
-            } else {
-                $this->error = "Не удалось открыть файл на чтение";
-            }
+        $header_data = $this->getHeaderData();
+        if ($header_data !== $this->columns) {
+            throw new FileFormatException("Исходный файл не содержит необходимых столбцов");
+        }
 
-        } else {
-            $this->error = "Файл не существует";
+        while ($line = $this->getNextLine()) {
+            $this->result[] = $line;
         }
     }
 
