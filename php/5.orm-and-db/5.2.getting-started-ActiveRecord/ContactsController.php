@@ -8,9 +8,14 @@ class ContactsController extends Controller
 {
     public function actionIndex()
     {
-        $contacts = Contact::findAll(['position' => 'Менеджер']);
-        foreach ($contacts as $contact) {
-            print($contact->name);
-        }
+        $props = [
+            'name' => 'Титов Денис',
+            'email' => 'den4ik@mail.ru',
+            'phone' => '78006994521',
+            'position' => 'Бухгалтер'
+        ];
+        $contact = new Contact();
+        $contact->attributes = $props;
+        $contact->save();
     }
 }

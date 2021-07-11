@@ -14,4 +14,10 @@ class Contact extends ActiveRecord
             'position' => 'Должность'
         ];
     }
+    public function rules()
+    {
+        return [
+            [['name', 'phone', 'email', 'position'], 'safe']
+        ];
+    }
 }
