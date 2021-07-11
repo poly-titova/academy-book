@@ -8,12 +8,9 @@ class ContactsController extends Controller
 {
     public function actionIndex()
     {
-        $contact = Contact::find()->one();
-        if ($contact) {
+        $contacts = Contact::findAll(['position' => 'Менеджер']);
+        foreach ($contacts as $contact) {
             print($contact->name);
-            print($contact->phone);
-            print($contact->email);
-            print($contact->position);
         }
     }
 }
