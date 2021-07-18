@@ -1,6 +1,6 @@
 'use strict';
 
-const PubSub = require(`./01-pub-sub`);
+const EventEmitter = require(`events`);
 
 const TIME_INTERVAL = 1000;
 const DEFAULT_STEP = -1;
@@ -12,7 +12,7 @@ const PIZZA_STATUSES = [
   `done`
 ];
 
-class Pizza extends PubSub {
+class Pizza extends EventEmitter {
   constructor(name) {
     super();
     this._name = name;
